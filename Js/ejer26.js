@@ -15,5 +15,5 @@ else if (tipo == 2) {
     console.log("Descuento:", descuento)
     console.log("Total a pagar:", total)
 }
-else;
+else
     console.log ("Tipo de cliente no valido")
