@@ -1,41 +1,89 @@
-// Ejercicio 52 - Buscar un número en el arreglo y mostrar su posición (o indicar si no existe)
+// Ejercicio 52 - Menú CRUD en arreglo (Agregar, Listar, Actualizar, Eliminar)
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 const arreglo = [];
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
-    });
-  } else {
-    rl.question("\n¿Qué número deseas buscar? ", (input) => {
-      const buscar = parseFloat(input);
-      const indice = arreglo.indexOf(buscar);
+const mostrarMenu = () => {
+  console.log("\n===== MENÚ CRUD =====");
+  console.log("1. Agregar elemento");
+  console.log("2. Listar elementos");
+  console.log("3. Actualizar elemento");
+  console.log("4. Eliminar elemento");
+  console.log("5. Salir");
 
-      console.log(`\nArreglo: ${arreglo.join(", ")}`);
-      if (indice !== -1) {
-        console.log(`El número ${buscar} se encontró en la posición ${indice} (índice base 0).`);
-      } else {
-        console.log(`El número ${buscar} no existe en el arreglo.`);
-      }
+  rl.question("Selecciona una opción: ", (opcion) => {
+    switch (opcion.trim()) {
+      case "1":
+        rl.question("Ingresa el elemento a agregar: ", (valor) => {
+          arreglo.push(valor.trim());
+          console.log(`"${valor.trim()}" agregado correctamente.`);
+          mostrarMenu();
+        });
+        break;
 
-      rl.close();
-    });
-  }
+      case "2":
+        if (arreglo.length === 0) {
+          console.log("El arreglo está vacío.");
+        } else {
+          console.log("\nElementos:");
+          arreglo.forEach((elem, i) => console.log(`  [${i}] ${elem}`));
+        }
+        mostrarMenu();
+        break;
+
+      case "3":
+        if (arreglo.length === 0) {
+          console.log("El arreglo está vacío.");
+          mostrarMenu();
+        } else {
+          arreglo.forEach((elem, i) => console.log(`  [${i}] ${elem}`));
+          rl.question("Índice a actualizar: ", (idx) => {
+            const i = parseInt(idx);
+            if (isNaN(i) || i < 0 || i >= arreglo.length) {
+              console.log("Índice inválido.");
+              mostrarMenu();
+            } else {
+              rl.question("Nuevo valor: ", (nuevoValor) => {
+                arreglo[i] = nuevoValor.trim();
+                console.log("Elemento actualizado.");
+                mostrarMenu();
+              });
+            }
+          });
+        }
+        break;
+
+      case "4":
+        if (arreglo.length === 0) {
+          console.log("El arreglo está vacío.");
+          mostrarMenu();
+        } else {
+          arreglo.forEach((elem, i) => console.log(`  [${i}] ${elem}`));
+          rl.question("Índice a eliminar: ", (idx) => {
+            const i = parseInt(idx);
+            if (isNaN(i) || i < 0 || i >= arreglo.length) {
+              console.log("Índice inválido.");
+            } else {
+              const eliminado = arreglo.splice(i, 1);
+              console.log(`"${eliminado}" eliminado correctamente.`);
+            }
+            mostrarMenu();
+          });
+        }
+        break;
+
+      case "5":
+        console.log("Saliendo...");
+        rl.close();
+        break;
+
+      default:
+        console.log("Opción inválida.");
+        mostrarMenu();
+    }
+  });
 };
 
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
-});
+mostrarMenu();

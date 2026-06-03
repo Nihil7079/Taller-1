@@ -1,19 +1,16 @@
-
+// Ejercicio 39 - Solicitar número y contar cantidad de dígitos
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-rl.question("Ingresa un número N: ", (input) => {
-  const n = parseInt(input);
+rl.question("Ingresa un número entero: ", (input) => {
+  const numero = parseInt(input);
 
-  if (isNaN(n) || n < 1) {
-    console.log("Por favor ingresa un número entero positivo.");
+  if (isNaN(numero)) {
+    console.log("Por favor ingresa un número válido.");
   } else {
-    let suma = 0;
-    for (let i = 1; i <= n; i++) {
-      suma += i;
-    }
-    console.log(`La suma de 1 a ${n} es: ${suma}`);
+    const cantidadDigitos = Math.abs(numero).toString().length;
+    console.log(`El número ${numero} tiene ${cantidadDigitos} dígito(s).`);
   }
 
   rl.close();

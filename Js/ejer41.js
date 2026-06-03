@@ -1,32 +1,26 @@
+// Ejercicio 41 - Crear arreglo de 5 números e imprimirlos
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-rl.question("¿Cuántos números vas a ingresar? ", (input) => {
-  const n = parseInt(input);
+const arreglo = [];
 
-  if (isNaN(n) || n < 1) {
-    console.log("Por favor ingresa un número entero positivo.");
+const leerNumero = () => {
+  if (arreglo.length < 5) {
+    rl.question(`Ingresa el número ${arreglo.length + 1}: `, (input) => {
+      const num = parseFloat(input);
+      if (isNaN(num)) {
+        console.log("Valor inválido, intenta de nuevo.");
+      } else {
+        arreglo.push(num);
+      }
+      leerNumero();
+    });
+  } else {
+    console.log("\nArreglo ingresado:");
+    console.log(arreglo.join(", "));
     rl.close();
-    return;
   }
+};
 
-  let contador = 0;
-  let ingresados = 0;
-
-  const preguntarNumero = () => {
-    if (ingresados < n) {
-      rl.question(`Número ${ingresados + 1}: `, (val) => {
-        const num = parseFloat(val);
-        if (!isNaN(num) && num > 0) contador++;
-        ingresados++;
-        preguntarNumero();
-      });
-    } else {
-      console.log(`\nCantidad de números positivos: ${contador}`);
-      rl.close();
-    }
-  };
-
-  preguntarNumero();
-});
+leerNumero();

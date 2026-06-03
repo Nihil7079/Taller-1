@@ -1,46 +1,16 @@
-// Ejercicio 58 - Registrar usuarios (nombre y edad) y mostrar los mayores de edad
+// Ejercicio 57 - Crear una matriz 3x3 e imprimirla
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const matriz = [];
 
-const usuarios = [];
+for (let i = 0; i < 3; i++) {
+  const fila = [];
+  for (let j = 0; j < 3; j++) {
+    fila.push(i * 3 + j + 1); // valores del 1 al 9
+  }
+  matriz.push(fila);
+}
 
-const registrarUsuario = () => {
-  rl.question("\n¿Deseas agregar un usuario? (s/n): ", (resp) => {
-    if (resp.trim().toLowerCase() === "s") {
-      rl.question("Nombre: ", (nombre) => {
-        rl.question("Edad: ", (edadInput) => {
-          const edad = parseInt(edadInput);
-          if (!nombre.trim() || isNaN(edad) || edad < 0) {
-            console.log("Datos inválidos, intenta de nuevo.");
-          } else {
-            usuarios.push({ nombre: nombre.trim(), edad });
-            console.log(`Usuario "${nombre.trim()}" registrado.`);
-          }
-          registrarUsuario();
-        });
-      });
-    } else {
-      const mayores = usuarios.filter((u) => u.edad >= 18);
-
-      console.log("\n===== USUARIOS REGISTRADOS =====");
-      if (usuarios.length === 0) {
-        console.log("No hay usuarios.");
-      } else {
-        usuarios.forEach((u) => console.log(`  ${u.nombre} - ${u.edad} años`));
-      }
-
-      console.log("\n===== USUARIOS MAYORES DE EDAD =====");
-      if (mayores.length === 0) {
-        console.log("Ninguno.");
-      } else {
-        mayores.forEach((u) => console.log(`  ${u.nombre} - ${u.edad} años`));
-      }
-
-      rl.close();
-    }
-  });
-};
-
-console.log("=== Registro de Usuarios ===");
-registrarUsuario();
+console.log("Matriz 3x3:");
+for (const fila of matriz) {
+  console.log(fila.join("\t"));
+}

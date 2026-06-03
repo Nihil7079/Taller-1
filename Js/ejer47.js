@@ -1,20 +1,35 @@
+// Ejercicio 47 - Buscar un número en el arreglo y mostrar su posición (o indicar si no existe)
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-rl.question("Ingresa el tamaño N del arreglo: ", (input) => {
-  const n = parseInt(input);
+const arreglo = [];
 
-  if (isNaN(n) || n < 1) {
-    console.log("Por favor ingresa un número entero positivo.");
+const leerNumero = (n) => {
+  if (arreglo.length < n) {
+    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
+      const num = parseFloat(input);
+      if (!isNaN(num)) arreglo.push(num);
+      else console.log("Valor inválido, intenta de nuevo.");
+      leerNumero(n);
+    });
   } else {
-    const arreglo = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
-    const suma = arreglo.reduce((acc, val) => acc + val, 0);
-
-    console.log(`\nArreglo generado (${n} elementos):`);
-    console.log(arreglo.join(", "));
-    console.log(`Suma total: ${suma}`);
+    rl.question("\n¿Qué número deseas buscar? ", (input) => {
+      const buscar = parseFloat(input);
+      const indice = arreglo.indexOf(buscar);
+      console.log(`\nArreglo: ${arreglo.join(", ")}`);
+      if (indice !== -1) {
+        console.log(`El número ${buscar} se encontró en la posición ${indice} (índice base 0).`);
+      } else {
+        console.log(`El número ${buscar} no existe en el arreglo.`);
+      }
+      rl.close();
+    });
   }
+};
 
-  rl.close();
+rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
+  const n = parseInt(input);
+  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
+  else leerNumero(n);
 });

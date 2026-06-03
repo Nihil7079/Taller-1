@@ -1,4 +1,4 @@
-// Ejercicio 48 - Encontrar el número mayor en un arreglo
+// Ejercicio 48 - Ordenar arreglo de menor a mayor (método burbuja)
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -14,19 +14,24 @@ const leerNumero = (n) => {
       leerNumero(n);
     });
   } else {
-    const mayor = Math.max(...arreglo);
-    console.log(`\nArreglo: ${arreglo.join(", ")}`);
-    console.log(`El número mayor es: ${mayor}`);
+    console.log(`\nArreglo original: ${arreglo.join(", ")}`);
+
+    const ordenado = [...arreglo];
+    for (let i = 0; i < ordenado.length - 1; i++) {
+      for (let j = 0; j < ordenado.length - 1 - i; j++) {
+        if (ordenado[j] > ordenado[j + 1]) {
+          [ordenado[j], ordenado[j + 1]] = [ordenado[j + 1], ordenado[j]];
+        }
+      }
+    }
+
+    console.log(`Arreglo ordenado (menor a mayor): ${ordenado.join(", ")}`);
     rl.close();
   }
 };
 
 rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
   const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
+  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
+  else leerNumero(n);
 });

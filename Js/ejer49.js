@@ -1,4 +1,4 @@
-// Ejercicio 49 - Encontrar el número menor en un arreglo
+// Ejercicio 49 - Invertir un arreglo
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -14,19 +14,15 @@ const leerNumero = (n) => {
       leerNumero(n);
     });
   } else {
-    const menor = Math.min(...arreglo);
-    console.log(`\nArreglo: ${arreglo.join(", ")}`);
-    console.log(`El número menor es: ${menor}`);
+    const invertido = [...arreglo].reverse();
+    console.log(`\nArreglo original:  ${arreglo.join(", ")}`);
+    console.log(`Arreglo invertido: ${invertido.join(", ")}`);
     rl.close();
   }
 };
 
 rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
   const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
+  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
+  else leerNumero(n);
 });

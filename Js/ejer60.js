@@ -1,62 +1,48 @@
-// Ejercicio 60 - Simular carrito de compras: agregar productos y mostrar total
+// Ejercicio 59 - Sistema de votación: 3 candidatos, contar votos y mostrar ganador
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-const carrito = [];
+const candidatos = [
+  { nombre: "Candidato A", votos: 0 },
+  { nombre: "Candidato B", votos: 0 },
+  { nombre: "Candidato C", votos: 0 },
+];
 
-const mostrarMenu = () => {
-  console.log("\n===== CARRITO DE COMPRAS =====");
-  console.log("1. Agregar producto");
-  console.log("2. Ver carrito y total");
-  console.log("3. Salir");
+const votar = () => {
+  console.log("\n===== SISTEMA DE VOTACIÓN =====");
+  console.log("1. Candidato A");
+  console.log("2. Candidato B");
+  console.log("3. Candidato C");
+  console.log("4. Finalizar votación");
 
-  rl.question("Selecciona una opción: ", (opcion) => {
-    switch (opcion.trim()) {
-      case "1":
-        rl.question("Nombre del producto: ", (nombre) => {
-          rl.question("Precio: ", (precioInput) => {
-            const precio = parseFloat(precioInput);
-            if (!nombre.trim() || isNaN(precio) || precio < 0) {
-              console.log("Datos inválidos.");
-            } else {
-              carrito.push({ nombre: nombre.trim(), precio });
-              console.log(`"${nombre.trim()}" agregado al carrito ($${precio.toFixed(2)}).`);
-            }
-            mostrarMenu();
-          });
-        });
-        break;
+  rl.question("Tu voto: ", (opcion) => {
+    const idx = parseInt(opcion) - 1;
 
-      case "2":
-        if (carrito.length === 0) {
-          console.log("El carrito está vacío.");
-        } else {
-          console.log("\nProductos en el carrito:");
-          carrito.forEach((p, i) => {
-            console.log(`  ${i + 1}. ${p.nombre} - $${p.precio.toFixed(2)}`);
-          });
-          const total = carrito.reduce((acc, p) => acc + p.precio, 0);
-          console.log(`\nTotal a pagar: $${total.toFixed(2)}`);
-        }
-        mostrarMenu();
-        break;
+    if (opcion.trim() === "4") {
+      console.log("\n===== RESULTADOS =====");
+      candidatos.forEach((c) => console.log(`  ${c.nombre}: ${c.votos} voto(s)`));
 
-      case "3":
-        if (carrito.length > 0) {
-          const total = carrito.reduce((acc, p) => acc + p.precio, 0);
-          console.log(`\nGracias por tu compra. Total: $${total.toFixed(2)}`);
-        } else {
-          console.log("Saliendo sin compras.");
-        }
-        rl.close();
-        break;
+      const maxVotos = Math.max(...candidatos.map((c) => c.votos));
+      const ganadores = candidatos.filter((c) => c.votos === maxVotos);
 
-      default:
-        console.log("Opción inválida.");
-        mostrarMenu();
+      if (ganadores.length === 1) {
+        console.log(`\nGanador: ${ganadores[0].nombre} con ${maxVotos} voto(s).`);
+      } else {
+        const empate = ganadores.map((c) => c.nombre).join(" y ");
+        console.log(`\nEmpate entre: ${empate} con ${maxVotos} voto(s) cada uno.`);
+      }
+
+      rl.close();
+    } else if (idx >= 0 && idx <= 2) {
+      candidatos[idx].votos++;
+      console.log(`Voto registrado para ${candidatos[idx].nombre}.`);
+      votar();
+    } else {
+      console.log("Opción inválida.");
+      votar();
     }
   });
 };
 
-mostrarMenu();
+votar();

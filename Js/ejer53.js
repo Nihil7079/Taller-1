@@ -1,42 +1,45 @@
-// Ejercicio 53 - Ordenar arreglo de menor a mayor (método burbuja)
+// Ejercicio 53 - Registrar usuarios (nombre y edad) y mostrar los mayores de edad
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-const arreglo = [];
+const usuarios = [];
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
-    });
-  } else {
-    console.log(`\nArreglo original: ${arreglo.join(", ")}`);
-
-    // Ordenamiento burbuja
-    const ordenado = [...arreglo];
-    for (let i = 0; i < ordenado.length - 1; i++) {
-      for (let j = 0; j < ordenado.length - 1 - i; j++) {
-        if (ordenado[j] > ordenado[j + 1]) {
-          [ordenado[j], ordenado[j + 1]] = [ordenado[j + 1], ordenado[j]];
-        }
+const registrarUsuario = () => {
+  rl.question("\n¿Deseas agregar un usuario? (s/n): ", (resp) => {
+    if (resp.trim().toLowerCase() === "s") {
+      rl.question("Nombre: ", (nombre) => {
+        rl.question("Edad: ", (edadInput) => {
+          const edad = parseInt(edadInput);
+          if (!nombre.trim() || isNaN(edad) || edad < 0) {
+            console.log("Datos inválidos, intenta de nuevo.");
+          } else {
+            usuarios.push({ nombre: nombre.trim(), edad });
+            console.log(`Usuario "${nombre.trim()}" registrado.`);
+          }
+          registrarUsuario();
+        });
+      });
+    } else {
+      console.log("\n===== TODOS LOS USUARIOS =====");
+      if (usuarios.length === 0) {
+        console.log("No hay usuarios registrados.");
+      } else {
+        usuarios.forEach((u) => console.log(`  ${u.nombre} - ${u.edad} años`));
       }
-    }
 
-    console.log(`Arreglo ordenado (menor a mayor): ${ordenado.join(", ")}`);
-    rl.close();
-  }
+      const mayores = usuarios.filter((u) => u.edad >= 18);
+      console.log("\n===== USUARIOS MAYORES DE EDAD =====");
+      if (mayores.length === 0) {
+        console.log("Ninguno.");
+      } else {
+        mayores.forEach((u) => console.log(`  ${u.nombre} - ${u.edad} años`));
+      }
+
+      rl.close();
+    }
+  });
 };
 
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
-});
+console.log("=== Registro de Usuarios ===");
+registrarUsuario();

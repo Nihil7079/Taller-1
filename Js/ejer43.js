@@ -1,31 +1,28 @@
+// Ejercicio 43 - Encontrar el número mayor en un arreglo
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-const secreto = Math.floor(Math.random() * 10) + 1;
-console.log("Adivina el número secreto entre 1 y 10.");
+const arreglo = [];
 
-const intentar = () => {
-  rl.question("Tu intento: ", (input) => {
-    const intento = parseInt(input);
-
-    if (isNaN(intento)) {
-      console.log("Por favor ingresa un número válido.");
-      intentar();
-      return;
-    }
-
-    if (intento === secreto) {
-      console.log("¡Correcto! Adivinaste el número.");
-      rl.close();
-    } else if (intento < secreto) {
-      console.log("El número secreto es MAYOR. Intenta de nuevo.");
-      intentar();
-    } else {
-      console.log("El número secreto es MENOR. Intenta de nuevo.");
-      intentar();
-    }
-  });
+const leerNumero = (n) => {
+  if (arreglo.length < n) {
+    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
+      const num = parseFloat(input);
+      if (!isNaN(num)) arreglo.push(num);
+      else console.log("Valor inválido, intenta de nuevo.");
+      leerNumero(n);
+    });
+  } else {
+    const mayor = Math.max(...arreglo);
+    console.log(`\nArreglo: ${arreglo.join(", ")}`);
+    console.log(`El número mayor es: ${mayor}`);
+    rl.close();
+  }
 };
 
-intentar();
+rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
+  const n = parseInt(input);
+  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
+  else leerNumero(n);
+});

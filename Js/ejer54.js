@@ -1,32 +1,22 @@
-// Ejercicio 54 - Invertir un arreglo
+// Ejercicio 54 - Mostrar usuarios mayores de edad (a partir de un arreglo ya registrado)
+// Nota: este ejercicio complementa el ejer53. Aquí se filtra y muestra solo los mayores de edad.
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const usuarios = [
+  { nombre: "Ana", edad: 20 },
+  { nombre: "Luis", edad: 15 },
+  { nombre: "Carlos", edad: 32 },
+  { nombre: "Sofia", edad: 17 },
+  { nombre: "Mario", edad: 25 },
+];
 
-const arreglo = [];
+console.log("===== TODOS LOS USUARIOS =====");
+usuarios.forEach((u) => console.log(`  ${u.nombre} - ${u.edad} años`));
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
-    });
-  } else {
-    const invertido = [...arreglo].reverse();
-    console.log(`\nArreglo original:  ${arreglo.join(", ")}`);
-    console.log(`Arreglo invertido: ${invertido.join(", ")}`);
-    rl.close();
-  }
-};
+const mayores = usuarios.filter((u) => u.edad >= 18);
 
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
-});
+console.log("\n===== USUARIOS MAYORES DE EDAD =====");
+if (mayores.length === 0) {
+  console.log("Ningún usuario es mayor de edad.");
+} else {
+  mayores.forEach((u) => console.log(`  ${u.nombre} - ${u.edad} años`));
+}

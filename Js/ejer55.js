@@ -1,4 +1,4 @@
-// Ejercicio 55 - Eliminar elementos duplicados de un arreglo
+// Ejercicio 54 - Calcular: mayor, menor y promedio de un arreglo
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -14,19 +14,20 @@ const leerNumero = (n) => {
       leerNumero(n);
     });
   } else {
-    const sinDuplicados = [...new Set(arreglo)];
-    console.log(`\nArreglo original:          ${arreglo.join(", ")}`);
-    console.log(`Arreglo sin duplicados: ${sinDuplicados.join(", ")}`);
+    const mayor = Math.max(...arreglo);
+    const menor = Math.min(...arreglo);
+    const promedio = arreglo.reduce((acc, v) => acc + v, 0) / arreglo.length;
+
+    console.log(`\nArreglo:  ${arreglo.join(", ")}`);
+    console.log(`Mayor:    ${mayor}`);
+    console.log(`Menor:    ${menor}`);
+    console.log(`Promedio: ${promedio.toFixed(2)}`);
     rl.close();
   }
 };
 
 rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
   const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
+  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
+  else leerNumero(n);
 });

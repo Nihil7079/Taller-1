@@ -1,33 +1,29 @@
-// Ejercicio 51 - Contar cuántos números pares hay en un arreglo
+// Ejercicio 51 - Registrar 5 notas, calcular promedio y determinar estado
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-const arreglo = [];
+const notas = [];
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseInt(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
+const leerNota = () => {
+  if (notas.length < 5) {
+    rl.question(`Nota ${notas.length + 1} (0–5): `, (input) => {
+      const nota = parseFloat(input);
+      if (isNaN(nota) || nota < 0 || nota > 5) {
+        console.log("Nota inválida. Debe estar entre 0 y 5.");
+      } else {
+        notas.push(nota);
+      }
+      leerNota();
     });
   } else {
-    const pares = arreglo.filter((num) => num % 2 === 0);
-    console.log(`\nArreglo: ${arreglo.join(", ")}`);
-    console.log(`Números pares: ${pares.join(", ") || "ninguno"}`);
-    console.log(`Cantidad de números pares: ${pares.length}`);
+    const promedio = notas.reduce((acc, n) => acc + n, 0) / notas.length;
+    const estado = promedio >= 3.5 ? "APROBADO" : "REPROBADO";
+    console.log(`\nNotas: ${notas.join(", ")}`);
+    console.log(`Promedio: ${promedio.toFixed(2)}`);
+    console.log(`Estado: ${estado}`);
     rl.close();
   }
 };
 
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
-});
+leerNota();

@@ -1,37 +1,43 @@
-// Ejercicio 59 - Calcular: mayor, menor y promedio de un arreglo
+// Ejercicio 58 - Juego: adivinar número con máximo 5 intentos
 
 const readline = require("readline");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-const arreglo = [];
+const secreto = Math.floor(Math.random() * 100) + 1;
+const MAX_INTENTOS = 5;
+let intentos = 0;
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
-    });
-  } else {
-    const mayor = Math.max(...arreglo);
-    const menor = Math.min(...arreglo);
-    const promedio = arreglo.reduce((acc, v) => acc + v, 0) / arreglo.length;
+console.log("Adivina el número secreto entre 1 y 100. Tienes 5 intentos.");
 
-    console.log(`\nArreglo: ${arreglo.join(", ")}`);
-    console.log(`Mayor:   ${mayor}`);
-    console.log(`Menor:   ${menor}`);
-    console.log(`Promedio: ${promedio.toFixed(2)}`);
+const intentar = () => {
+  if (intentos >= MAX_INTENTOS) {
+    console.log(`\nAgotaste tus ${MAX_INTENTOS} intentos. El número era: ${secreto}`);
     rl.close();
+    return;
   }
+
+  rl.question(`\nIntento ${intentos + 1}/${MAX_INTENTOS}: `, (input) => {
+    const intento = parseInt(input);
+
+    if (isNaN(intento)) {
+      console.log("Por favor ingresa un número válido.");
+      intentar();
+      return;
+    }
+
+    intentos++;
+
+    if (intento === secreto) {
+      console.log(`¡Correcto! Adivinaste el número en ${intentos} intento(s).`);
+      rl.close();
+    } else if (intentos < MAX_INTENTOS) {
+      console.log(intento < secreto ? "El número secreto es MAYOR." : "El número secreto es MENOR.");
+      intentar();
+    } else {
+      console.log(`\nAgotaste tus ${MAX_INTENTOS} intentos. El número era: ${secreto}`);
+      rl.close();
+    }
+  });
 };
 
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) {
-    console.log("Número inválido.");
-    rl.close();
-  } else {
-    leerNumero(n);
-  }
-});
+intentar();
