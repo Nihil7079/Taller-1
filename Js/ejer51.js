@@ -1,29 +1,15 @@
-// Ejercicio 51 - Registrar 5 notas, calcular promedio y determinar estado
+// Ejercicio 51 - Registrar 5 notas, calcular promedio y estado
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let notas = [4.5, 3.2, 2.8, 4.0, 3.7];
+let suma = 0;
 
-const notas = [];
+for (let i = 0; i < notas.length; i++) {
+  suma += notas[i];
+}
 
-const leerNota = () => {
-  if (notas.length < 5) {
-    rl.question(`Nota ${notas.length + 1} (0–5): `, (input) => {
-      const nota = parseFloat(input);
-      if (isNaN(nota) || nota < 0 || nota > 5) {
-        console.log("Nota inválida. Debe estar entre 0 y 5.");
-      } else {
-        notas.push(nota);
-      }
-      leerNota();
-    });
-  } else {
-    const promedio = notas.reduce((acc, n) => acc + n, 0) / notas.length;
-    const estado = promedio >= 3.5 ? "APROBADO" : "REPROBADO";
-    console.log(`\nNotas: ${notas.join(", ")}`);
-    console.log(`Promedio: ${promedio.toFixed(2)}`);
-    console.log(`Estado: ${estado}`);
-    rl.close();
-  }
-};
+let promedio = suma / notas.length;
+let estado = promedio >= 3.5 ? "APROBADO" : "REPROBADO";
 
-leerNota();
+console.log("Notas:    ", notas.join(", "));
+console.log("Promedio:", promedio.toFixed(2));
+console.log("Estado:  ", estado);

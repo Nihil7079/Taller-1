@@ -1,33 +1,19 @@
-// Ejercicio 54 - Calcular: mayor, menor y promedio de un arreglo
+// Ejercicio 55 - Calcular mayor, menor y promedio de un arreglo
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let numeros = [15, 42, 8, 97, 23, 61];
+let mayor = numeros[0];
+let menor = numeros[0];
+let suma = 0;
 
-const arreglo = [];
+for (let i = 0; i < numeros.length; i++) {
+  if (numeros[i] > mayor) mayor = numeros[i];
+  if (numeros[i] < menor) menor = numeros[i];
+  suma += numeros[i];
+}
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
-    });
-  } else {
-    const mayor = Math.max(...arreglo);
-    const menor = Math.min(...arreglo);
-    const promedio = arreglo.reduce((acc, v) => acc + v, 0) / arreglo.length;
+let promedio = suma / numeros.length;
 
-    console.log(`\nArreglo:  ${arreglo.join(", ")}`);
-    console.log(`Mayor:    ${mayor}`);
-    console.log(`Menor:    ${menor}`);
-    console.log(`Promedio: ${promedio.toFixed(2)}`);
-    rl.close();
-  }
-};
-
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
-  else leerNumero(n);
-});
+console.log("Arreglo: ", numeros.join(", "));
+console.log("Mayor:   ", mayor);
+console.log("Menor:   ", menor);
+console.log("Promedio:", promedio.toFixed(2));

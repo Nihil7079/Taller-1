@@ -1,33 +1,11 @@
-// Ejercicio 36 - Solicitar N números y contar cuántos son positivos
+// Ejercicio 36 - Contar cuántos de N números son positivos
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let numeros = [3, -1, 5, -2, 0, 7, -4, 2, 1, -3];
+let positivos = 0;
 
-rl.question("¿Cuántos números vas a ingresar? ", (input) => {
-  const n = parseInt(input);
+for (let i = 0; i < numeros.length; i++) {
+  if (numeros[i] > 0) positivos++;
+}
 
-  if (isNaN(n) || n < 1) {
-    console.log("Por favor ingresa un número entero positivo.");
-    rl.close();
-    return;
-  }
-
-  let contador = 0;
-  let ingresados = 0;
-
-  const preguntarNumero = () => {
-    if (ingresados < n) {
-      rl.question(`Número ${ingresados + 1}: `, (val) => {
-        const num = parseFloat(val);
-        if (!isNaN(num) && num > 0) contador++;
-        ingresados++;
-        preguntarNumero();
-      });
-    } else {
-      console.log(`\nCantidad de números positivos: ${contador}`);
-      rl.close();
-    }
-  };
-
-  preguntarNumero();
-});
+console.log("Números:", numeros.join(", "));
+console.log("Positivos:", positivos);

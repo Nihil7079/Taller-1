@@ -1,89 +1,21 @@
-// Ejercicio 52 - Menú CRUD en arreglo (Agregar, Listar, Actualizar, Eliminar)
+// Ejercicio 52 - CRUD en arreglo (Agregar, Listar, Actualizar, Eliminar)
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let arreglo = ["manzana", "pera", "uva"];
 
-const arreglo = [];
+// Agregar
+arreglo.push("mango");
+console.log("Después de agregar 'mango':", arreglo.join(", "));
 
-const mostrarMenu = () => {
-  console.log("\n===== MENÚ CRUD =====");
-  console.log("1. Agregar elemento");
-  console.log("2. Listar elementos");
-  console.log("3. Actualizar elemento");
-  console.log("4. Eliminar elemento");
-  console.log("5. Salir");
+// Listar
+console.log("\nLista completa:");
+for (let i = 0; i < arreglo.length; i++) {
+  console.log("  [" + i + "] " + arreglo[i]);
+}
 
-  rl.question("Selecciona una opción: ", (opcion) => {
-    switch (opcion.trim()) {
-      case "1":
-        rl.question("Ingresa el elemento a agregar: ", (valor) => {
-          arreglo.push(valor.trim());
-          console.log(`"${valor.trim()}" agregado correctamente.`);
-          mostrarMenu();
-        });
-        break;
+// Actualizar índice 1
+arreglo[1] = "melón";
+console.log("\nDespués de actualizar índice 1 a 'melón':", arreglo.join(", "));
 
-      case "2":
-        if (arreglo.length === 0) {
-          console.log("El arreglo está vacío.");
-        } else {
-          console.log("\nElementos:");
-          arreglo.forEach((elem, i) => console.log(`  [${i}] ${elem}`));
-        }
-        mostrarMenu();
-        break;
-
-      case "3":
-        if (arreglo.length === 0) {
-          console.log("El arreglo está vacío.");
-          mostrarMenu();
-        } else {
-          arreglo.forEach((elem, i) => console.log(`  [${i}] ${elem}`));
-          rl.question("Índice a actualizar: ", (idx) => {
-            const i = parseInt(idx);
-            if (isNaN(i) || i < 0 || i >= arreglo.length) {
-              console.log("Índice inválido.");
-              mostrarMenu();
-            } else {
-              rl.question("Nuevo valor: ", (nuevoValor) => {
-                arreglo[i] = nuevoValor.trim();
-                console.log("Elemento actualizado.");
-                mostrarMenu();
-              });
-            }
-          });
-        }
-        break;
-
-      case "4":
-        if (arreglo.length === 0) {
-          console.log("El arreglo está vacío.");
-          mostrarMenu();
-        } else {
-          arreglo.forEach((elem, i) => console.log(`  [${i}] ${elem}`));
-          rl.question("Índice a eliminar: ", (idx) => {
-            const i = parseInt(idx);
-            if (isNaN(i) || i < 0 || i >= arreglo.length) {
-              console.log("Índice inválido.");
-            } else {
-              const eliminado = arreglo.splice(i, 1);
-              console.log(`"${eliminado}" eliminado correctamente.`);
-            }
-            mostrarMenu();
-          });
-        }
-        break;
-
-      case "5":
-        console.log("Saliendo...");
-        rl.close();
-        break;
-
-      default:
-        console.log("Opción inválida.");
-        mostrarMenu();
-    }
-  });
-};
-
-mostrarMenu();
+// Eliminar índice 2
+arreglo.splice(2, 1);
+console.log("Después de eliminar índice 2:", arreglo.join(", "));

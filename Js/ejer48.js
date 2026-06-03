@@ -1,37 +1,17 @@
-// Ejercicio 48 - Ordenar arreglo de menor a mayor (método burbuja)
+// Ejercicio 48 - Ordenar arreglo de menor a mayor (burbuja)
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let numeros = [64, 34, 25, 12, 22, 11, 90];
 
-const arreglo = [];
+console.log("Original:", numeros.join(", "));
 
-const leerNumero = (n) => {
-  if (arreglo.length < n) {
-    rl.question(`Número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (!isNaN(num)) arreglo.push(num);
-      else console.log("Valor inválido, intenta de nuevo.");
-      leerNumero(n);
-    });
-  } else {
-    console.log(`\nArreglo original: ${arreglo.join(", ")}`);
-
-    const ordenado = [...arreglo];
-    for (let i = 0; i < ordenado.length - 1; i++) {
-      for (let j = 0; j < ordenado.length - 1 - i; j++) {
-        if (ordenado[j] > ordenado[j + 1]) {
-          [ordenado[j], ordenado[j + 1]] = [ordenado[j + 1], ordenado[j]];
-        }
-      }
+for (let i = 0; i < numeros.length - 1; i++) {
+  for (let j = 0; j < numeros.length - 1 - i; j++) {
+    if (numeros[j] > numeros[j + 1]) {
+      let temp = numeros[j];
+      numeros[j] = numeros[j + 1];
+      numeros[j + 1] = temp;
     }
-
-    console.log(`Arreglo ordenado (menor a mayor): ${ordenado.join(", ")}`);
-    rl.close();
   }
-};
+}
 
-rl.question("¿Cuántos números tiene el arreglo? ", (input) => {
-  const n = parseInt(input);
-  if (isNaN(n) || n < 1) { console.log("Número inválido."); rl.close(); }
-  else leerNumero(n);
-});
+console.log("Ordenado:", numeros.join(", "));

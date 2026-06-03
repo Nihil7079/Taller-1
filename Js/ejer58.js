@@ -1,16 +1,12 @@
-// Ejercicio 57 - Crear una matriz 3x3 e imprimirla
+// Ejercicio 58 - Crear matriz 3x3 e imprimirla
 
-const matriz = [];
-
-for (let i = 0; i < 3; i++) {
-  const fila = [];
-  for (let j = 0; j < 3; j++) {
-    fila.push(i * 3 + j + 1); // valores del 1 al 9
-  }
-  matriz.push(fila);
-}
+let matriz = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
 
 console.log("Matriz 3x3:");
-for (const fila of matriz) {
-  console.log(fila.join("\t"));
+for (let i = 0; i < 3; i++) {
+  console.log(matriz[i].join("  "));
 }

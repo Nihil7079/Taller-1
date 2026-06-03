@@ -1,26 +1,8 @@
 // Ejercicio 41 - Crear arreglo de 5 números e imprimirlos
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let numeros = [10, 25, 37, 42, 58];
 
-const arreglo = [];
-
-const leerNumero = () => {
-  if (arreglo.length < 5) {
-    rl.question(`Ingresa el número ${arreglo.length + 1}: `, (input) => {
-      const num = parseFloat(input);
-      if (isNaN(num)) {
-        console.log("Valor inválido, intenta de nuevo.");
-      } else {
-        arreglo.push(num);
-      }
-      leerNumero();
-    });
-  } else {
-    console.log("\nArreglo ingresado:");
-    console.log(arreglo.join(", "));
-    rl.close();
-  }
-};
-
-leerNumero();
+console.log("Arreglo:");
+for (let i = 0; i < numeros.length; i++) {
+  console.log("  [" + i + "] " + numeros[i]);
+}

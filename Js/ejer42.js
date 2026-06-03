@@ -1,21 +1,16 @@
-// Ejercicio 42 - Sumar los elementos de un arreglo de tamaño N (elementos aleatorios)
+// Ejercicio 42 - Sumar elementos de un arreglo de tamaño N (aleatorios)
 
-const readline = require("readline");
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+let n = 6;
+let arreglo = [];
 
-rl.question("Ingresa el tamaño N del arreglo: ", (input) => {
-  const n = parseInt(input);
+for (let i = 0; i < n; i++) {
+  arreglo.push(Math.floor(Math.random() * 100) + 1);
+}
 
-  if (isNaN(n) || n < 1) {
-    console.log("Por favor ingresa un número entero positivo.");
-  } else {
-    const arreglo = Array.from({ length: n }, () => Math.floor(Math.random() * 100) + 1);
-    const suma = arreglo.reduce((acc, val) => acc + val, 0);
+let suma = 0;
+for (let i = 0; i < arreglo.length; i++) {
+  suma += arreglo[i];
+}
 
-    console.log(`\nArreglo generado (${n} elementos):`);
-    console.log(arreglo.join(", "));
-    console.log(`Suma total: ${suma}`);
-  }
-
-  rl.close();
-});
+console.log("Arreglo:", arreglo.join(", "));
+console.log("Suma:", suma);
